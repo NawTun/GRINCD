@@ -38,4 +38,4 @@ Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is desi
 
 The prediction results of 'DREAM5_alg_output' and some auxiliary files are downloaded from https://www.synapse.org/#!Synapse:syn2787211.
 The directory "exp_scripts" contains some experiments scripts mentioned in the paper. You may change some absolute path in the codes to ensure normal running.
-
+The full content of input and output can be downloaded from https://zenodo.org/record/6794599#.YsLzqXbP1PZ
