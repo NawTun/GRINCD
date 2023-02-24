@@ -1,4 +1,28 @@
+# 0.Overview
+
+This repository is related to a novel GRN (Gene Regulatory Network) inference framework named GRINCD which integrate node embedding and causal discovery. GRINCD used to pipelines of linear and non-linear, it first generates high-quality gene representation using GraphSAGE, and then using pairwise causal discovery model ANM to calculate regulatory relations. GRINCD does not generate deterministic directed networks, it only output a ranked list representing importance of each regulatory relations as GINIE3.
+
 # 1.Directory Description
+
+## -'exp_scripts'
+
+This directory contains all experimental scripts in GRN inference.
+
+### --'exp_script.py'
+
+This script includes cross-comparison of perforamce of methods, identification of key factors for colon cancer, and so on.
+
+### --'graph_property.py'
+
+This script is used to caulculate property of each gold standard.
+
+### --'input_process.py'
+
+This script is used to process raw expression matrix for single-cell datasets.
+
+### --'PIDC.jl'
+
+This script is used to inference GRN using PIDC, you may need to build Julia environment containing package NetworkInference for the running of this script.
 
 ## -'input'
 
@@ -32,7 +56,7 @@ This directory includes AUROC values and AUPR values distribution for all datase
 # 2.Usage
 
 Using `python eval.py` to evaluation the results for the datasets mentioned in the paper, 
-Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is designed for parallel computing
+Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is designed for parallel computing which means that two cores of GPU are necessary, if this need is not met, please run `main.py` instead.
 
 # 3.Some statement
 
