@@ -11,7 +11,7 @@ import itertools
 from sklearn.utils import shuffle
 import eval
 
-
+# calculate mutual information of two variables, X and Y are vectors, bins is the number of intervals used to discrete vectors.
 def calc_MI(X, Y, bins):
     XY_hist = np.histogram2d(X, Y, bins)[0]
     X_hist = np.histogram(X, bins)[0]
@@ -22,14 +22,14 @@ def calc_MI(X, Y, bins):
     MI = X_entropy + Y_entropy - XY_entropy
     return MI
 
-
+# calculate entropy of vector c.
 def calc_entropy(c):
     c_prob = c / float(np.sum(c))
     c_prob = c_prob[np.nonzero(c_prob)]
     H = -sum(c_prob * np.log2(c_prob))
     return H
 
-
+# create non-linear co-expression network using mutual information, this calculation would skipped if network csv file already exist.
 def mi_net(tf_num, data_file, threshold=0.3, ):
     expr = pd.read_csv(data_file + "/expression_data.tsv", sep='\t', header=0)
     expr = (expr - expr.mean()) / (expr.std())
@@ -142,7 +142,7 @@ def gen_random_network(net_name, gs_type, num):
     print(ret)
     ret.to_csv(net_name + "_" + gs_type + ".tsv", sep="\t", header=True, index=False)
 
-
+# generate a ranked list for a weighted matrix W.
 def generate_res(W, tf_num, genes):
     W = np.abs(W)
     np.fill_diagonal(W, 0)
