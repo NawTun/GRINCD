@@ -5,7 +5,7 @@ import scipy.io as scio
 from tqdm.auto import tqdm
 from numpy import mean
 
-
+# process raw data of gold standard
 def edgelist_2_D5C4_gs(gold_positives):
     TFs = np.unique(gold_positives[0].values)
     targets = np.unique(gold_positives[[0, 1]].values)
@@ -34,7 +34,6 @@ def remove_edges_not_in_gs(prediction, G):
     prediction_cleaned = prediction[tmp]
     return prediction_cleaned
 
-
 def probability(X, Y, x):
     X = X.squeeze(0)
     Y = Y.squeeze(0)
@@ -43,7 +42,7 @@ def probability(X, Y, x):
     P = np.sum(tmp * Y * dx)
     return P
 
-
+# calculate confidence score
 def evaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc):
     G = edgelist_2_D5C4_gs(gold_positives)
     P = np.sum(G == 1)
@@ -91,7 +90,7 @@ def evaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc):
     P_AUROC = probability(X, Y, AUROC)
     return TPR, FPR, PREC, REC, L, AUROC, AUPR, P_AUROC, P_AUPR
 
-
+# calculate EP
 def EP(gold_standard, prediction):
     k = gold_standard.shape[0]
     gs_set = set(zip(gold_standard[0], gold_standard[1]))
@@ -101,7 +100,7 @@ def EP(gold_standard, prediction):
     precision = l / k
     return precision
 
-
+# calculate EPR
 def EPR(gold_standard, prediction):
     ep = EP(gold_standard, prediction)
     random_ep = []
@@ -111,7 +110,7 @@ def EPR(gold_standard, prediction):
     epr = ep / np.mean(random_ep)
     return epr
 
-
+# run evalutaion and it would output four metrics
 def run(prediction, gold_standard, pdf_aupr, pdf_auroc):
     gold_standard[0] = gold_standard[0].str[1:].astype(int)
     gold_standard[1] = gold_standard[1].str[1:].astype(int)
