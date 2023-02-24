@@ -1,3 +1,5 @@
+# The main difference between main and main_v2 is multiple introduction to Tensorflow
+
 import pandas as pd
 import numpy as np
 import os
