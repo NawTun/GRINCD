@@ -56,7 +56,7 @@ def mi_net(tf_num, data_file, threshold=0.3, ):
     print(mi_mtx)
     return mi_mtx
 
-
+# ensenmble of linear pipeline and non-linear pipeline
 def ensemble(pred1, pred2, alpha=0.5):
     pred1 = pred1.sort_values(by=['tf', 'tg'], ascending=True)
     pred2 = pred2.sort_values(by=['tf', 'tg'], ascending=True)
@@ -69,7 +69,7 @@ def ensemble(pred1, pred2, alpha=0.5):
     return en_res
 
 
-# 计算correlation矩阵
+# calculate correlation matrix
 def co_expr_net(tf_num, data_file, threshold=0.3):
     expr = pd.read_csv(data_file, sep='\t', header=0)
     expr = (expr - expr.mean()) / (expr.std())
@@ -84,7 +84,7 @@ def co_expr_net(tf_num, data_file, threshold=0.3):
     return corr_mtx
 
 
-# 构建stellargraph
+# construct stellargraph
 def from_pandas_to_stell(adj_mtx, data_file='input/in_silico/expression_data.tsv'):
     expr = pd.read_csv(data_file, sep='\t', header=0)
     expr = (expr - expr.mean()) / (expr.std())
@@ -101,7 +101,7 @@ def from_pandas_to_stell(adj_mtx, data_file='input/in_silico/expression_data.tsv
     return G
 
 
-# 节点嵌入
+# gene representation
 def node_embedding(G):
     nodes = list(G.nodes())
     number_of_walks = hyper_parameters['number_of_walks']
@@ -144,7 +144,7 @@ def node_embedding(G):
     pd_node_embeddings = pd.DataFrame(node_embeddings.T, columns=nodes)
     return pd_node_embeddings
 
-
+# calculate importance of regulatory relations using ANM
 def calc_dirction(pd_node_embeddings, tfs):
     t1 = time.time()
     tf_list = []
