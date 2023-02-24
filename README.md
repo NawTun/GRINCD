@@ -24,6 +24,14 @@ This script is used to process raw expression matrix for single-cell datasets.
 
 This script is used to inference GRN using PIDC, you may need to build Julia environment containing package NetworkInference for the running of this script.
 
+### --'top_k_accuracy.py'
+
+This script is used to calculate accuracy of top k regulatory relations of methods.
+
+### --'top_k_intersection.py'
+
+This script is used to calculate intersection of top k regulatory relations between GRINCD and other methods.
+
 ## -'input'
 
 This directory includes all datasets and other materials necessary for all methods and framework. In DREAM5
