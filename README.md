@@ -56,7 +56,7 @@ This directory includes AUROC values and AUPR values distribution for all datase
 # 2.Usage
 
 Using `python eval.py` to evaluation the results for the datasets mentioned in the paper, 
-Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is designed for parallel computing which means that two cores of GPU are necessary, if this need is not met, please run `main.py` instead.
+Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is designed for parallel computing which means that two cores of GPU are necessary, if this need is not met, please run `main.py` instead. For more introductions about methods, please refer to code annotations.
 
 # 3.Some statement
 
