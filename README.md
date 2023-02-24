@@ -53,12 +53,42 @@ This directory includes the outputs of methods on hESC and mDC that used for com
 
 This directory includes AUROC values and AUPR values distribution for all datasets.
 
-# 2.Usage
+# 2.File Description
+
+## -'anm.py'
+
+This script implements additive noise model (ANM).
+
+## -'corr_edge.csv' and 'mi_edge.csv'
+
+These two files store some information in the process of computing gold standards characteristics using for analysis. GRINCD does not necessarily rely on them during running.
+
+## -'eval.py'
+
+These script is used to evaluate result of a certain method using four metrics, AUROC, AUPR, confidence score and EPR.
+
+## -'main.py' and 'main_v2.py'
+
+These two files are entrances of GRINCD.
+
+## -'our_eval_res.csv'
+
+These file preserves the evaluation results of GRINCD on the single-cell datasets.
+
+## -'scribe_res.csv'
+
+These file preserves the evaluation results of Scribe on the single-cell datasets.
+
+## -'utils.py'
+
+These script contains some tool method of GRINCD.
+
+# 3.Usage
 
 Using `python eval.py` to evaluation the results for the datasets mentioned in the paper, 
 Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is designed for parallel computing which means that two cores of GPU are necessary, if this need is not met, please run `main.py` instead. For more introductions about methods, please refer to code annotations.
 
-# 3.Some statement
+# 4.Some statement
 
 The prediction results of 'DREAM5_alg_output' and some auxiliary files are downloaded from https://www.synapse.org/#!Synapse:syn2787211.
 The directory "exp_scripts" contains some experiments scripts mentioned in the paper. You may change some absolute path in the codes to ensure normal running.
