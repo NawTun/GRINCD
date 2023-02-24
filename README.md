@@ -1,6 +1,6 @@
 # 0.Overview
 
-This repository is related to a novel GRN (Gene Regulatory Network) inference framework named GRINCD which integrate node embedding and causal discovery. GRINCD used to pipelines of linear and non-linear, it first generates high-quality gene representation using GraphSAGE, and then using pairwise causal discovery model ANM to calculate regulatory relations. GRINCD does not generate deterministic directed networks, it only output a ranked list representing importance of each regulatory relations as GINIE3.
+This repository is related to a novel GRN (Gene Regulatory Network) inference framework named GRINCD which integrate node embedding and causal discovery. GRINCD used two pipelines of linear and non-linear, it first generates high-quality gene representation using GraphSAGE, and then using pairwise causal discovery model ANM to calculate regulatory relations. GRINCD does not generate deterministic directed networks, it only output a ranked list representing importance of each regulatory relations as GINIE3.
 
 # 1.Directory Description
 
