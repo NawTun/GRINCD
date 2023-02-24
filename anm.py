@@ -16,7 +16,7 @@ def rbf_dot(X, deg):
 
     return H
 
-
+# use HSIC to evaluate independence of two variables X and Y
 def FastHsicTestGamma(X, Y, sig=[-1, -1], maxpnt=200):
     m = X.shape[0]
     if m > maxpnt:
