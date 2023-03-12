@@ -14,8 +14,13 @@ import seaborn as sns
 from anm import ANM
 
 
-# 微调AUROC和AUPR以计算出合适的score
 def padding(array, threshold):
+    """
+    Fine-tune AUROC and AUPR to calculate the appropriate score.
+    :param array: AUROC or AUPR list.
+    :param threshold: Threshold.
+    :return: AUROC or AUPR list after fine-tuning.
+    """
     i = 0
     pre_idx = 0
     post_idx = len(array) - 1
@@ -42,6 +47,9 @@ def padding(array, threshold):
 
 # 使用padding方法对pdf进行微调
 def tune_pdf():
+    """
+    Use the padding method to fine-tune the pdf.
+    """
     dir_list = utils.get_dir_list()[3:]
     print(len(dir_list))
     for i in dir_list:
@@ -56,8 +64,10 @@ def tune_pdf():
         print('end')
 
 
-# 将评估的结果记录到文件中以便统计
 def add_res():
+    """
+    Record the results of the evaluation to a file for statistics.
+    """
     input_dirs = utils.get_dir_list()
     output_dir = [i.replace('input', 'output') for i in input_dirs[:3]]
     print(output_dir)
@@ -85,8 +95,10 @@ def add_res():
                 f.write(str(epr))
 
 
-# 统计评估结果并计算均值
 def collect_res():
+    """
+    Statistically evaluate the results and calculate the mean.
+    """
     input_dirs = utils.get_dir_list()
     output_dir = [i.replace('input', 'output') for i in input_dirs[:3]]
     for dir in output_dir:
@@ -135,6 +147,9 @@ def collect_res():
 
 
 def get_beeline_input():
+    """
+    Get the input of the Beeline dataset.
+    """
     original_dir = utils.get_dir_list()[:3]
     print(original_dir)
     for dir in original_dir:
@@ -147,6 +162,9 @@ def get_beeline_input():
 
 
 def run_grnboost2():
+    """
+    Run GRNBOOST2 to infer GRN.
+    """
     original_dir = utils.get_dir_list()[:3]
     for i in original_dir:
         print(i.split("/")[-1])
@@ -161,6 +179,9 @@ def run_grnboost2():
 
 
 def run_narromi():
+    """
+    Run narromi to infer GRN.
+    """
     original_dir = utils.get_dir_list()[:3]
     for i in original_dir:
         print(i.split("/")[-1])
@@ -182,6 +203,9 @@ def run_narromi():
 
 
 def convert_PIDC():
+    """
+    Convert PIDC result.
+    """
     base_input_dir = "/home/fengke/pycode/my_exp/paper/exp/input/"
     sc_names = ["hESC", "mDC"]
     gs_names = ["Cell_type_specific", "Non_specific", "STRING"]
@@ -202,8 +226,10 @@ def convert_PIDC():
     #     ex_matrix.T.to_csv("tmp/" + net_name + "_PIDC.txt", sep="\t", header=True, index=True)
 
 
-# 删除PIDC结果中的非TF的项
 def delete_non_tfs():
+    """
+    Delete non-TF items in PIDC results
+    """
     dir = "/home/fengke/pycode/my_exp/paper/exp/output/DREAM5_alg_output/PIDC"
     net_name_list = ["e_coli"]
     for net_name in net_name_list:
@@ -215,8 +241,10 @@ def delete_non_tfs():
         data.to_csv(dir + "/" + net_name + ".txt", sep="\t", header=False, index=False)
 
 
-# 处理ppcor方法的结果
 def post_porcess_res_of_ppcor():
+    """
+    Process the result of the ppcor method.
+    """
     dir = "/home/fengke/pycode/my_exp/paper/exp/output/ppcor"
     files = os.listdir(dir)
     for file in files:
@@ -238,8 +266,10 @@ def post_porcess_res_of_ppcor():
         print(res)
 
 
-# 删除列表中的最后一列
 def delete_conf():
+    """
+    Remove the last column in the ranked list
+    """
     # net_name_list = ["e_coli.txt"]
     dir = "/home/fengke/pycode/my_exp/paper/exp/output/sc_alg_output/PIDC/"
     for file in os.listdir(dir):
@@ -249,6 +279,9 @@ def delete_conf():
 
 
 def run_eval():
+    """
+    Evaluation of various results.
+    """
     alg_list = ["plsnet"]
     net_name_list = ["in_silico", "e_coli", "s_cere"]
     dir = "/home/fengke/pycode/my_exp/paper/exp/output/DREAM5_alg_output/"
@@ -266,6 +299,9 @@ def run_eval():
 
 
 def run_sc_alg():
+    """
+    Run PLSNET to infer GRN.
+    """
     base_input_dir = "/home/fengke/pycode/my_exp/paper/exp/input/"
     # sc_names = ["hESC", "mDC"]
     # gs_names = ["Cell_type_specific", "Non_specific", "STRING"]
@@ -336,6 +372,9 @@ def sub_PIDC(cmd):
 
 
 def run_PIDC():
+    """
+    Run PIDC to infer GRN.
+    """
     base_input_dir = "/home/fengke/pycode/my_exp/paper/exp/input/"
     jl_script = "/home/fengke/pycode/my_exp/paper/exp/PIDC.jl"
     sc_names = ["hESC", "mDC"]
@@ -355,6 +394,9 @@ def run_PIDC():
 
 
 def run_sc_eval():
+    """
+    Evaluation of single cell resluts.
+    """
     base_input_dir = "/home/fengke/pycode/my_exp/paper/exp/input/"
     base_out_dir = "/home/fengke/pycode/my_exp/paper/exp/output/sc_alg_output/"
     alg_list = os.listdir(base_out_dir)
@@ -413,6 +455,9 @@ def our_res():
 
 
 def eval_scribe():
+    """
+    Evaluation of Sribe.
+    """
     sc_names = ["hESC", "mDC"]
     gs_names = ["Cell_type_specific", "Non_specific", "STRING"]
     num_names = ["500", "1000"]
@@ -450,6 +495,9 @@ def eval_scribe():
 
 
 def eval_ANM():
+    """
+    Evaluation of isolated ANM.
+    """
     base_dir = './input/'
     dream5_data = ['e_coli', 'in_silico', 's_cere']
     sc_name = ['hESC', 'mDC']
