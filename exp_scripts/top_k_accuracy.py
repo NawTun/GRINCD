@@ -4,7 +4,9 @@ import pandas as pd
 
 
 def dream5():
-    # 所有的gs数据
+    """
+    Top k accuracy rate of methods on the DREAM5 datasets.
+    """
     methods_list = ["GRINCD"]
     for method in os.listdir("./output/DREAM5_alg_output"):
         if method.startswith("."):
@@ -41,7 +43,9 @@ def dream5():
 
 
 def single_cell():
-    # 所有的gs数据
+    """
+    Top k accuracy rate of methods on the single cell datasets.
+    """
     sc_data_list = []
     for i in ["hESC_", "mDC_"]:
         for j in ["Cell_type_specific", "Non_specific", "STRING"]:
