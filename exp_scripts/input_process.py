@@ -6,6 +6,13 @@ import eval
 
 
 def modify_exp(df, tfs, dir):
+    """
+    Divide the expression matrix into a transcription factor part and a target gene part.
+    :param df: Expression matrix
+    :param tfs: The list of transcription factors.
+    :param dir: Directory of output.
+    :return: None
+    """
     print(tfs)
     all_genes = set(df.columns)
     other_genes = all_genes.difference(set(tfs[0]))
@@ -17,6 +24,11 @@ def modify_exp(df, tfs, dir):
 
 
 def mapping_id(dir):
+    """
+    Associate the gene id with the gene name.
+    :param dir: Directory of expression matrix.
+    :return: None
+    """
     df = pd.read_csv(dir + "expression_data.tsv", sep="\t", header=0)
     no_of_genes = df.shape[1]
     gene_ids = ["G" + str(i + 1) for i in range(no_of_genes)]
@@ -30,6 +42,13 @@ def mapping_id(dir):
 
 
 def mapping_gs(tfs, gs, dir):
+    """
+    Associate the gene id with the gene name in gold standard.
+    :param tfs: The list of transcription factors.
+    :param gs: Gold standard.
+    :param dir: Directory of files.
+    :return: 
+    """
     gene_mapping = pd.read_csv(dir + "gene_ids.tsv", sep="\t", header=0)
     print(tfs)
     mapping_dict = gene_mapping.set_index(["Name"])["#ID"].to_dict()
