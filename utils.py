@@ -57,6 +57,10 @@ def mi_net(tf_num, data_file, threshold=0.3, ):
 
 
 def get_dir_list():
+    """
+    Get file directory for single cell data.
+    :return: List of single cell data directory.
+    """
     net_list = ["in_silico", "e_coli", "s_cere", "hESC", "mDC"]
     input_base_dir = "/home/fengke/pycode/my_exp/paper/exp/input/"
     input_dir_list = []
@@ -84,8 +88,11 @@ def main():
         p.join()
 
 
-# generate random network auroc and aupr distrubution
 def generate_au_dist():
+    """
+    Generate random network auroc and aupr distrubution.
+    :return: None
+    """
     input_dir_list = get_dir_list()
     dir_list = [i for i in input_dir_list if ('in_silico' not in i) and ('e_coli' not in i) and ('s_cere' not in i)]
     for dir in tqdm(dir_list):
@@ -114,8 +121,14 @@ def generate_au_dist():
         scio.savemat(dir + "/AUPR.mat", {"X": X_plot, "Y": aupr_dense})
 
 
-# generate random networks
 def gen_random_network(net_name, gs_type, num):
+    """
+    Generate random networks from a list of genes.
+    :param net_name: Type of single cell.
+    :param gs_type: Type of gold standard.
+    :param num: Number of generated networks.
+    :return: None
+    """
     base_dir = "./input/"
     tfs = pd.read_csv(base_dir + net_name + "/transcription_factors.tsv", sep="\t", header=None)[0]
     genes = pd.read_csv(base_dir + net_name + "/gene_ids.tsv", sep="\t", header=0)["#ID"]
@@ -142,8 +155,15 @@ def gen_random_network(net_name, gs_type, num):
     print(ret)
     ret.to_csv(net_name + "_" + gs_type + ".tsv", sep="\t", header=True, index=False)
 
-# generate a ranked list for a weighted matrix W.
+
 def generate_res(W, tf_num, genes):
+    """
+    Generate GRN from the weight matrix.
+    :param W: Weight matrix.
+    :param tf_num: Number of transcription factors.
+    :param genes: The list of genes.
+    :return: A ranked list representing GRN.
+    """
     W = np.abs(W)
     np.fill_diagonal(W, 0)
     W_prime = W[range(tf_num), :]
