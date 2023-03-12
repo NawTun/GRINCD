@@ -6,6 +6,9 @@ from scipy import stats
 
 
 def dream5():
+    """
+    Top k accuracy rate of methods on the DREAM5 datasets.
+    """
     top_k = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000]
     methods = os.listdir("./output/DREAM5_alg_output")
     our_in_silico_res = []
@@ -42,6 +45,9 @@ def dream5():
 
 
 def single_cell():
+    """
+    Top k accuracy rate of methods on the single cell datasets.
+    """
     top_k = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000]
     methods = os.listdir("./output/sc_alg_output")
     dataset_name = []
@@ -143,6 +149,9 @@ def demo():
 
 
 def exp0625():
+    """
+    Screening for specific expression genes in the colon.
+    """
     human_tfs_df = pd.read_csv(
         "/Users/lgge/Library/CloudStorage/OneDrive-个人/论文/res_for_chart/colon_cancer/exp0625/tf_human.txt",
         sep="\t", header=None)
