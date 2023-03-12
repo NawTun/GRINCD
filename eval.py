@@ -5,8 +5,13 @@ import scipy.io as scio
 from tqdm.auto import tqdm
 from numpy import mean
 
-# process raw data of gold standard
+
 def edgelist_2_D5C4_gs(gold_positives):
+    """
+    Processing raw data of gold standard.
+    :param gold_positives: Gold standard.
+    :return: A graph of gold standard.
+    """
     TFs = np.unique(gold_positives[0].values)
     targets = np.unique(gold_positives[[0, 1]].values)
     max_TF = max(TFs)
@@ -26,6 +31,12 @@ def edgelist_2_D5C4_gs(gold_positives):
 
 
 def remove_edges_not_in_gs(prediction, G):
+    """
+    Remove edges that do not exist in the gold standard
+    :param prediction: Inferred GRN.
+    :param G: Gold standard.
+    :return: Network after removing.
+    """
     TFs, targets = G.shape
     prediction = prediction[(prediction[0] <= TFs) & (prediction[1] <= targets)]
     i = prediction[0] - 1
@@ -35,6 +46,13 @@ def remove_edges_not_in_gs(prediction, G):
     return prediction_cleaned
 
 def probability(X, Y, x):
+    """
+    Calculate the probability of a vector from a joint distribution
+    :param X: Vector 1.
+    :param Y: Vector 2.
+    :param x: Vector to be estimated.
+    :return: Probability of vector x.
+    """
     X = X.squeeze(0)
     Y = Y.squeeze(0)
     dx = X[1] - X[0]
@@ -42,8 +60,15 @@ def probability(X, Y, x):
     P = np.sum(tmp * Y * dx)
     return P
 
-# calculate confidence score
 def evaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc):
+    """
+    Calculate confidence score.
+    :param gold_positives: Gold standard.
+    :param prediction_raw:Inferred GRN.
+    :param pdf_aupr: Distribution of AUPR.
+    :param pdf_auroc: Distribution of AUROC.
+    :return: The value of confidence score.
+    """
     G = edgelist_2_D5C4_gs(gold_positives)
     P = np.sum(G == 1)
     N = np.sum(G == -1)
@@ -90,8 +115,14 @@ def evaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc):
     P_AUROC = probability(X, Y, AUROC)
     return TPR, FPR, PREC, REC, L, AUROC, AUPR, P_AUROC, P_AUPR
 
-# calculate EP
+
 def EP(gold_standard, prediction):
+    """
+    Calculate Early Precision.
+    :param gold_standard: Gold standard.
+    :param prediction: Inferred GRN.
+    :return: The value of Early Precision.
+    """
     k = gold_standard.shape[0]
     gs_set = set(zip(gold_standard[0], gold_standard[1]))
     pred = prediction.iloc[:k, :]
@@ -100,8 +131,13 @@ def EP(gold_standard, prediction):
     precision = l / k
     return precision
 
-# calculate EPR
 def EPR(gold_standard, prediction):
+    """
+    Calculate Early Precision Rate.
+    :param gold_standard: Gold standard.
+    :param prediction: Inferred GRN.
+    :return: The value of Early Precision Rate.
+    """
     ep = EP(gold_standard, prediction)
     random_ep = []
     for i in range(100):
@@ -110,8 +146,16 @@ def EPR(gold_standard, prediction):
     epr = ep / np.mean(random_ep)
     return epr
 
-# run evalutaion and it would output four metrics
+
 def run(prediction, gold_standard, pdf_aupr, pdf_auroc):
+    """
+    Run evalutaion, this method would output four metrics
+    :param prediction: Inferred GRN.
+    :param gold_standard: Gold standard.
+    :param pdf_aupr: Distribution of AUPR.
+    :param pdf_auroc: Distribution of AUROC.
+    :return: The value of four metrics.
+    """
     gold_standard[0] = gold_standard[0].str[1:].astype(int)
     gold_standard[1] = gold_standard[1].str[1:].astype(int)
     prediction.columns = [0, 1]
