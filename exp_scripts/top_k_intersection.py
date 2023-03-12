@@ -7,7 +7,7 @@ from scipy import stats
 
 def dream5():
     """
-    Top k accuracy rate of methods on the DREAM5 datasets.
+    Top k intersection of methods on the DREAM5 datasets.
     """
     top_k = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000]
     methods = os.listdir("./output/DREAM5_alg_output")
@@ -46,7 +46,7 @@ def dream5():
 
 def single_cell():
     """
-    Top k accuracy rate of methods on the single cell datasets.
+    Top k intersection of methods on the single cell datasets.
     """
     top_k = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000]
     methods = os.listdir("./output/sc_alg_output")
