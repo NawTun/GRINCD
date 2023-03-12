@@ -59,4 +59,7 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    Calculate graph properties of each gold standard.
+    """
     main()
