@@ -1,8 +1,8 @@
-# 0.Overview
+# 0. Overview
 
 This repository is related to a novel GRN (Gene Regulatory Network) inference framework named GRINCD which integrate node embedding and causal discovery. GRINCD used two pipelines of linear and non-linear, it first generates high-quality gene representation using GraphSAGE, and then using pairwise causal discovery model ANM to calculate regulatory relations. GRINCD does not generate deterministic directed networks, it only output a ranked list representing importance of each regulatory relations as GINIE3.
 
-# 1.Directory Description
+# 1. Directory Description
 
 ## -'exp_scripts'
 
@@ -61,7 +61,7 @@ This directory includes the outputs of methods on hESC and mDC that used for com
 
 This directory includes AUROC values and AUPR values distribution for all datasets.
 
-# 2.File Description
+# 2. File Description
 
 ## -'anm.py'
 
@@ -91,12 +91,12 @@ These file preserves the evaluation results of Scribe on the single-cell dataset
 
 These script contains some tool method of GRINCD.
 
-# 3.Usage
+# 3. Usage
 
 Using `python eval.py` to evaluation the results for the datasets mentioned in the paper, 
 Running `main.py` or `main_v2.py` for newly added datasets, `main_v2.py` is designed for parallel computing which means that two cores of GPU are necessary, if this need is not met, please run `main.py` instead. For more introductions about methods, please refer to code annotations.
 
-# 4.Some statement
+# 4. Some statement
 
 The prediction results of 'DREAM5_alg_output' and some auxiliary files are downloaded from https://www.synapse.org/#!Synapse:syn2787211.
 The directory "exp_scripts" contains some experiments scripts mentioned in the paper. You may change some absolute path in the codes to ensure normal running.
