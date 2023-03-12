@@ -57,6 +57,11 @@ class ANM:
         super(ANM, self).__init__()
 
     def predict_proba(self, data, **kwargs):
+        """
+        Prediction method for pairwise causal inference using the ANM model.
+        :param data: Couple of np.ndarray variables to classify.
+        :return: Causation score.
+        """
         a, b = data
         a_normal = (a - a.mean()) / a.std()
         b_normal = (b - b.mean()) / b.std()
@@ -65,6 +70,12 @@ class ANM:
         return self.anm_score(b, a) - self.anm_score(a, b)
 
     def anm_score(self, x, y):
+        """
+        Compute the fitness score of the ANM model in the x->y direction.
+        :param x: Variable seen as cause.
+        :param y: Variable seen as effect.
+        :return: ANM fit score.
+        """
         gp = GaussianProcessRegressor().fit(x, y)
         y_predict = gp.predict(x)
         indepscore = normalized_hsic(y_predict - y, x)
