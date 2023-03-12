@@ -10,6 +10,7 @@ from stellargraph.mapper import GraphSAGENodeGenerator
 from anm import ANM
 from tqdm.auto import tqdm
 
+# Hyperparameters for Neural Networks
 hyper_parameters = {
     'number_of_walks': 1,
     'length': 5,
@@ -20,6 +21,13 @@ hyper_parameters = {
 
 
 def calc_MI(X, Y, bins):
+    """
+    Calculate the mutual information of two vectors
+    :param X: Vector 1
+    :param Y: Vector 2
+    :param bins: Interval of vector discretization.
+    :return: The value of mutual information between vector 1 and vector 2.
+    """
     XY_hist = np.histogram2d(X, Y, bins)[0]
     X_hist = np.histogram(X, bins)[0]
     Y_hist = np.histogram(Y, bins)[0]
@@ -31,6 +39,11 @@ def calc_MI(X, Y, bins):
 
 
 def calc_entropy(c):
+    """
+    Calculate the entropy of a variable.
+    :param c: Vector to be calculated.
+    :return: The value of entropy.
+    """
     c_prob = c / float(np.sum(c))
     c_prob = c_prob[np.nonzero(c_prob)]
     H = -sum(c_prob * np.log2(c_prob))
@@ -38,6 +51,13 @@ def calc_entropy(c):
 
 
 def mi_net(tf_num, data_file, threshold=0.3, ):
+    """
+    Construction of the gene co-expression network using mutual information.
+    :param tf_num: The number of transcription factors.
+    :param data_file: Gene expression matrix.
+    :param threshold: The threshold used to construct the co-expression network.
+    :return: Mutual information co-expression matrix.
+    """
     expr = pd.read_csv(data_file, sep='\t', header=0)
     expr = (expr - expr.mean()) / (expr.std())
     mi_mtx = np.zeros((expr.shape[1], expr.shape[1]))
@@ -56,8 +76,15 @@ def mi_net(tf_num, data_file, threshold=0.3, ):
     print(mi_mtx)
     return mi_mtx
 
-# ensenmble of linear pipeline and non-linear pipeline
+
 def ensemble(pred1, pred2, alpha=0.5):
+    """
+    Ensemble based on two different inference results.
+    :param pred1: Inference result 1.
+    :param pred2: Inference result 2.
+    :param alpha: Weight of result 1.
+    :return: Ensemble result.
+    """
     pred1 = pred1.sort_values(by=['tf', 'tg'], ascending=True)
     pred2 = pred2.sort_values(by=['tf', 'tg'], ascending=True)
     en_res = pd.DataFrame(columns=['tf', 'tg', 'conf'])
@@ -69,8 +96,14 @@ def ensemble(pred1, pred2, alpha=0.5):
     return en_res
 
 
-# calculate correlation matrix
 def co_expr_net(tf_num, data_file, threshold=0.3):
+    """
+    Construction of the gene co-expression network using Pearson correlation.
+    :param tf_num: The number of transcription factors.
+    :param data_file: Gene expression matrix.
+    :param threshold: The threshold used to construct the co-expression network.
+    :return: Linear co-expression matrix.
+    """
     expr = pd.read_csv(data_file, sep='\t', header=0)
     expr = (expr - expr.mean()) / (expr.std())
     corr_mtx = expr.corr()
@@ -84,8 +117,13 @@ def co_expr_net(tf_num, data_file, threshold=0.3):
     return corr_mtx
 
 
-# construct stellargraph
 def from_pandas_to_stell(adj_mtx, data_file='input/in_silico/expression_data.tsv'):
+    """
+    Construct data in StellarGraph format.
+    :param adj_mtx: Adjacency matrix of the network.
+    :param data_file: Network file.
+    :return: Network in StellarGraph format.
+    """
     expr = pd.read_csv(data_file, sep='\t', header=0)
     expr = (expr - expr.mean()) / (expr.std())
     node_features = expr.T
@@ -101,8 +139,12 @@ def from_pandas_to_stell(adj_mtx, data_file='input/in_silico/expression_data.tsv
     return G
 
 
-# gene representation
 def node_embedding(G):
+    """
+    Doing gene representation using graph neural networks.
+    :param G: Graph in StellarGraph format.
+    :return: New gene representation.
+    """
     nodes = list(G.nodes())
     number_of_walks = hyper_parameters['number_of_walks']
     length = hyper_parameters['length']
@@ -144,8 +186,14 @@ def node_embedding(G):
     pd_node_embeddings = pd.DataFrame(node_embeddings.T, columns=nodes)
     return pd_node_embeddings
 
-# calculate importance of regulatory relations using ANM
+
 def calc_dirction(pd_node_embeddings, tfs):
+    """
+    Inferring regulatory relationships between TFs and TGs using ANM.
+    :param pd_node_embeddings: Gene representation.
+    :param tfs: The list of transcription factors.
+    :return: Inferred GRN.
+    """
     t1 = time.time()
     tf_list = []
     tg_list = []
